@@ -4,7 +4,7 @@ cask "chorus" do
 
   url "https://github.com/gixiphy/Chorus/releases/download/v#{version.csv.first}/Chorus-#{version.csv.first}-b#{version.csv.second}.zip"
   name "Chorus"
-  desc "Menu bar control for displays and audio across Macs, with AI lighting and EQ advisors"
+  desc "Menu bar control for displays and audio, synced across Macs on the LAN"
   homepage "https://github.com/gixiphy/Chorus"
 
   livecheck do
@@ -20,20 +20,20 @@ cask "chorus" do
     end
   end
 
-  depends_on macos: ">= :tahoe"
+  depends_on macos: :tahoe
 
   app "Chorus.app"
   binary "#{appdir}/Chorus.app/Contents/SharedSupport/chorus"
 
   uninstall quit:       "com.hermes.Chorus",
             login_item: "Chorus",
-            delete:     "/Library/Audio/Plug-Ins/HAL/ChorusAudioDevice.driver",
             script:     {
               executable:   "/usr/bin/killall",
               args:         ["coreaudiod"],
               sudo:         true,
               must_succeed: false,
-            }
+            },
+            delete:     "/Library/Audio/Plug-Ins/HAL/ChorusAudioDevice.driver"
 
   zap trash: [
     "~/.config/chorus",
