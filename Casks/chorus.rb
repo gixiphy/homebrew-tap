@@ -25,15 +25,16 @@ cask "chorus" do
   app "Chorus.app"
   binary "#{appdir}/Chorus.app/Contents/SharedSupport/chorus"
 
+  # HAL driver 由 app 以管理員權限裝到 /Library；只有真的裝過才需要 sudo 移除並重啟 coreaudiod。
+  driver = "/Library/Audio/Plug-Ins/HAL/ChorusAudioDevice.driver"
   uninstall quit:       "com.hermes.Chorus",
             login_item: "Chorus",
             script:     {
-              executable:   "/usr/bin/killall",
-              args:         ["coreaudiod"],
-              sudo:         true,
+              executable:   "/bin/sh",
+              args:         ["-c", "[ -d '#{driver}' ] || exit 0; rm -rf '#{driver}' && killall coreaudiod"],
+              sudo:         File.directory?(driver),
               must_succeed: false,
-            },
-            delete:     "/Library/Audio/Plug-Ins/HAL/ChorusAudioDevice.driver"
+            }
 
   zap trash: [
     "~/.config/chorus",
