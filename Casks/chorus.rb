@@ -1,6 +1,6 @@
 cask "chorus" do
-  version "1.15.1,129"
-  sha256 "aee134ce318074ae9762c8316c746fa862e76d393f4cf9abc97d75174184c4ae"
+  version "1.15.2,134"
+  sha256 "cd38aea80832ca0e926fe53d18a898b20be46df9bc2f20cdbecbed4983b74031"
 
   url "https://github.com/gixiphy/Chorus/releases/download/v#{version.csv.first}/Chorus-#{version.csv.first}-b#{version.csv.second}.zip"
   name "Chorus"
